@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Evercrafted Weather Blueprints — Columbus, Ohio — September 13, 2026</title>
+<style>
+  :root{
+    --ink:#1f241f;
+    --muted:#667066;
+    --paper:#f5f2eb;
+    --card:#fffdf8;
+    --line:#d8d2c8;
+    --vine:#795a3e;
+    --shadow:0 14px 35px rgba(40,38,32,.10);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  header{
+    padding:36px 24px 28px;
+    max-width:1400px;
+    margin:auto;
+  }
+  h1{font-family:Georgia,serif;font-size:clamp(34px,5vw,64px);margin:0 0 12px;letter-spacing:-.02em}
+  .kicker{letter-spacing:.16em;text-transform:uppercase;font-size:12px;color:var(--muted);font-weight:700}
+  .weather{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+    margin-top:22px;
+  }
+  .weather div{
+    background:rgba(255,255,255,.62);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:14px 16px;
+  }
+  .weather b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px}
+  main{max-width:1400px;margin:auto;padding:0 24px 60px}
+  .toolbar{
+    display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px;
+    position:sticky;top:0;padding:12px 0;background:linear-gradient(var(--paper) 75%, transparent);z-index:5
+  }
+  button{
+    border:1px solid #bcb6ac;background:#fff;border-radius:999px;padding:10px 15px;
+    font-weight:700;cursor:pointer;color:#343931
+  }
+  button.active{background:#20251f;color:white;border-color:#20251f}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:22px}
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .cardhead{padding:22px 24px 0}
+  .season{font-size:11px;text-transform:uppercase;letter-spacing:.15em;font-weight:800;color:var(--muted)}
+  h2{font-family:Georgia,serif;font-size:34px;margin:5px 0 8px}
+  .desc{color:#515950;line-height:1.55;min-height:72px}
+  .layout{display:grid;grid-template-columns:minmax(270px,1.05fr) minmax(220px,.95fr);gap:10px;padding:16px}
+  .canvas{
+    aspect-ratio:1/1;background:#efede6;border-radius:18px;border:1px solid #ded8cf;position:relative;overflow:hidden
+  }
+  svg{width:100%;height:100%;display:block}
+  .panel{
+    padding:4px 8px 8px;display:flex;flex-direction:column;gap:10px;max-height:100%;
+  }
+  .spec{
+    border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff;
+  }
+  .spec h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px;color:var(--muted)}
+  .spec p,.spec li{font-size:13px;line-height:1.45;margin:0}
+  ul{padding-left:18px;margin:0}
+  .legend{display:flex;gap:7px;flex-wrap:wrap}
+  .chip{font-size:11px;border-radius:999px;padding:6px 9px;border:1px solid #d5d0c6;background:white}
+  .placements{padding:0 24px 24px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{padding:9px 8px;border-bottom:1px solid #e3ded6;text-align:left;vertical-align:top}
+  th{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .role{font-weight:700}
+  .note{font-size:12px;color:var(--muted);padding:0 24px 22px;line-height:1.5}
+  .hidden{display:none!important}
+  @media(max-width:760px){
+    .grid{grid-template-columns:1fr}
+    .layout{grid-template-columns:1fr}
+    .desc{min-height:0}
+  }
+  @media print{
+    .toolbar{display:none}
+    body{background:white}
+    .card{break-inside:avoid;box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">Evercrafted • Weather-Driven Blueprint Study</div>
+  <h1>Columbus Weather Wreaths</h1>
+  <p>Sunday, September 13, 2026. Four manufacturable Evercrafted concepts translated from today's heat, humidity, shifting cloud cover, afternoon storm risk, wind, and sharp overnight cool-down.</p>
+  <section class="weather">
+    <div><b>Current</b>Partly sunny • 71°F</div>
+    <div><b>High / Low</b>85°F / 54°F</div>
+    <div><b>Day Pattern</b>Warm, humid, clouds + sun</div>
+    <div><b>Later</b>Breezy • scattered thunderstorms</div>
+    <div><b>Design Signal</b>Warmth → storm → cool front</div>
+  </section>
+</header>
+
+<main>
+  <nav class="toolbar">
+    <button class="active" data-filter="all">All Blueprints</button>
+    <button data-filter="fall">Fall</button>
+    <button data-filter="winter">Winter</button>
+    <button data-filter="christmas">Christmas</button>
+    <button data-filter="transition">Storm Study</button>
+    <button id="printBtn">Print / Save PDF</button>
+  </nav>
+
+  <section class="grid" id="cards"></section>
+</main>
+
+<script>
+const designs = [
+{
+ id:"fall",
+ season:"Fall",
+ title:"Storm-Warmed Harvest",
+ subtitle:"A sun-warmed crescent that looks caught just before the afternoon storm arrives.",
+ influence:"The 85°F humid warmth drives the coral, rust and tawny-gold palette; breezy afternoon storms drive a directional upper-left sweep, with darker berries and wet-bark tones gathering low in the composition.",
+ palette:["#B8613B","#D98A53","#E7C99A","#7A5142","#73806C","#4E5948"],
+ openArc:"4:30–7:00",
+ bow:"1:30 • wide burnt-ochre linen • 4 loose loops • 20–22 in. tails woven behind the upper floral bridge",
+ materials:"Grapevine; substantial silver-dollar eucalyptus; Italian ruscus; muted magnolia; rust hydrangea; coral garden rose; cream ranunculus; burgundy berry spray; burnt-orange rose hip.",
+ items:[
+  ["G01","Silver-dollar eucalyptus branch","greenery","9:40","r .86","Upper-left wind release; 8–10 in beyond floral edge"],
+  ["G02","Italian ruscus branch","greenery","10:35","r .93","Long outward vector, not drooping"],
+  ["G03","Magnolia foliage pocket","greenery","8:35","r .74","Broad leaves behind focal mass"],
+  ["F01","Rust hydrangea","focal","9:15","r .70","Primary mass, seated deep into pocket"],
+  ["F02","Coral garden rose","focal","10:10","r .67","Hero bloom slightly above hydrangea"],
+  ["S01","Cream ranunculus pair","secondary","11:05","r .72","Bridge toward bow"],
+  ["A01","Burgundy berry spray","accent","7:55","r .82","Storm-dark counterweight"],
+  ["A02","Burnt-orange rose hip","accent","11:45","r .86","Small warm glint, sparse"],
+  ["R01","Designer linen bow","ribbon","1:30","r .82","Large loose loops; long tails tucked behind stems"]
+ ],
+ colors:{greenery:"#66725B",focal:"#B95D3A",secondary:"#E6C9A2",accent:"#6F3F47",ribbon:"#A86233"}
+},
+{
+ id:"winter",
+ season:"Winter",
+ title:"Cold Front Quiet",
+ subtitle:"A restrained winter crescent built from the dramatic overnight cooling rather than imaginary snow.",
+ influence:"Today's plunge from a warm 85°F afternoon toward 54°F overnight becomes a cool ivory, blue-sage and charcoal-green composition. The geometry is quieter and more architectural than the fall piece, like the first clean north wind after humidity breaks.",
+ palette:["#F3EFE7","#C9D1C5","#AAB7B3","#667369","#404A43","#A78F80"],
+ openArc:"12:30–4:30",
+ bow:"7:15 • smoky taupe raw silk • 3 broad loose loops • 22 in. tails integrated beneath focal pocket",
+ materials:"Grapevine; eucalyptus; dusty miller; blue-green juniper-style faux spray used sparingly; ivory hellebore; cream peony; white anemone; silver berry; smoky taupe raw silk.",
+ items:[
+  ["G01","Eucalyptus branch","greenery","7:20","r .90","Long lower-left release; 9 in beyond bloom edge"],
+  ["G02","Dusty miller branch","greenery","8:15","r .78","Soft matte pocket"],
+  ["G03","Blue-green structured evergreen spray","greenery","10:25","r .90","Single substantial upward release"],
+  ["F01","Ivory hellebore","focal","8:45","r .68","Primary winter focal"],
+  ["F02","Cream peony","focal","9:35","r .67","Broad secondary hero"],
+  ["S01","White anemone","secondary","10:20","r .72","Crisp visual punctuation"],
+  ["A01","Silver berry stem","accent","6:40","r .84","Sparse, cool reflective note"],
+  ["R01","Raw-silk bow","ribbon","7:15","r .80","Loose designer bow, tails behind focal stems"]
+ ],
+ colors:{greenery:"#68766E",focal:"#E8E1D4",secondary:"#F8F6F0",accent:"#A9B4B0",ribbon:"#9B8578"}
+},
+{
+ id:"christmas",
+ season:"Christmas",
+ title:"After-Rain Evergreen",
+ subtitle:"Deep holiday color, storm-cleared gloss, and a disciplined open arc instead of a stuffed green donut.",
+ influence:"The afternoon thunderstorm risk suggests rain-darkened grapevine, deeper evergreen values, oxblood accents and small reflective berry notes. Warm breaks of sun keep the palette from becoming gloomy, so champagne magnolia and cream ranunculus lift the composition.",
+ palette:["#24382E","#3D5746","#7A1E2F","#B98D63","#E8DDC9","#5E302E"],
+ openArc:"2:15–5:00",
+ bow:"6:30 • oxblood-and-champagne tartan velvet • 5 generous loops • 24 in. tails woven in/out behind evergreen and florals",
+ materials:"Grapevine; noble-fir style faux evergreen; cedar; magnolia foliage; oxblood hellebore; cream ranunculus; champagne hydrangea; red berry; antique-gold bell cluster; designer tartan velvet ribbon.",
+ items:[
+  ["G01","Noble-fir branch","greenery","10:30","r .93","Substantial 10–12 in branch"],
+  ["G02","Cedar branch","greenery","11:35","r .90","Airy directional release"],
+  ["G03","Magnolia leaf pocket","greenery","8:40","r .76","Broad-leaf structure around focal"],
+  ["F01","Champagne hydrangea","focal","9:05","r .67","Primary luminous mass"],
+  ["F02","Oxblood hellebore trio","focal","7:55","r .70","Dark storm counterweight"],
+  ["S01","Cream ranunculus","secondary","10:05","r .72","Warm clearing-light bridge"],
+  ["A01","Red berry stem","accent","12:05","r .88","Sparse directional sparkle"],
+  ["A02","Antique-gold bells","accent","6:55","r .84","Small clustered hardware detail"],
+  ["R01","Tartan velvet bow","ribbon","6:30","r .80","Large loops, knot partly hidden; 24 in tails"]
+ ],
+ colors:{greenery:"#2F4A39",focal:"#7C2432",secondary:"#E6D8C1",accent:"#B78B55",ribbon:"#6C2331"}
+},
+{
+ id:"transition",
+ season:"Storm Study",
+ title:"Thunderhead September",
+ subtitle:"A fourth transitional study because today's weather is doing entirely too much to fit into three seasonal boxes.",
+ influence:"This one isolates the storm itself: sunlit parchment at the top, smoky plum and slate through the focal zone, and long wind-driven eucalyptus vectors. It is intentionally more editorial and less literal than the seasonal concepts.",
+ palette:["#D8C7A7","#87727A","#5B6670","#A65F4B","#6D786B","#3D4548"],
+ openArc:"5:30–8:00",
+ bow:"2:00 • weathered mauve velvet • asymmetric loose loops • 18–20 in. tails traveling behind secondary stems",
+ materials:"Grapevine; seeded eucalyptus; Italian ruscus; smoke-blue foliage; muted mauve hydrangea; terracotta rose; ivory scabiosa; plum berry; weathered mauve velvet.",
+ items:[
+  ["G01","Seeded eucalyptus branch","greenery","11:10","r .95","Wind-driven upper release"],
+  ["G02","Italian ruscus branch","greenery","12:05","r .90","Long narrow vector"],
+  ["G03","Smoke-blue foliage pocket","greenery","3:20","r .78","Cool storm-cloud bridge"],
+  ["F01","Muted mauve hydrangea","focal","1:05","r .67","Primary cloud-like focal mass"],
+  ["F02","Terracotta garden rose","focal","12:20","r .70","Warm sun-break counterpoint"],
+  ["S01","Ivory scabiosa","secondary","2:10","r .75","Light punctuation"],
+  ["A01","Plum berry stem","accent","4:05","r .87","Descending storm note"],
+  ["R01","Weathered mauve velvet bow","ribbon","2:00","r .82","Relaxed large loops; tails behind structure"]
+ ],
+ colors:{greenery:"#667268",focal:"#836A78",secondary:"#E3D9C8",accent:"#4E4653",ribbon:"#8A6671"}
+}
+];
+
+function clockToDeg(clock){
+  const [h,m="0"] = clock.split(":").map(Number);
+  return ((h%12)*30 + m*.5);
+}
+function polar(cx,cy,r,deg){
+  const a=(deg-90)*Math.PI/180;
+  return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+}
+function svgFor(d){
+  let s=`<svg viewBox="0 0 500 500" aria-label="${d.title} blueprint">
+    <rect width="500" height="500" fill="#efede6"/>
+    <circle cx="250" cy="250" r="171" fill="none" stroke="#795a3e" stroke-width="34" opacity=".90"/>
+    <circle cx="250" cy="250" r="120" fill="#efede6" stroke="#9a846c" stroke-width="2" stroke-dasharray="6 8"/>
+    <circle cx="250" cy="250" r="205" fill="none" stroke="#c9c4bb" stroke-width="1"/>
+    <text x="250" y="25" text-anchor="middle" font-size="12" fill="#687067">12</text>
+    <text x="475" y="254" text-anchor="middle" font-size="12" fill="#687067">3</text>
+    <text x="250" y="488" text-anchor="middle" font-size="12" fill="#687067">6</text>
+    <text x="25" y="254" text-anchor="middle" font-size="12" fill="#687067">9</text>`;
+  d.items.forEach((it,i)=>{
+    const role=it[2], clock=it[3];
+    const deg=clockToDeg(clock);
+    let rr = role==="greenery"?186: role==="ribbon"?176: role==="accent"?180: role==="secondary"?160:150;
+    const [x,y]=polar(250,250,rr,deg);
+    const col=d.colors[role]||d.colors.focal;
+    const radius= role==="greenery"?18: role==="ribbon"?23: role==="accent"?10: role==="secondary"?15:21;
+    if(role==="greenery"){
+      const [x2,y2]=polar(250,250,225,deg);
+      s+=`<line x1="${x}" y1="${y}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="8" stroke-linecap="round" opacity=".9"/>`;
+      s+=`<circle cx="${x}" cy="${y}" r="${radius}" fill="${col}" stroke="white" stroke-width="3"/>`;
+    }else if(role==="ribbon"){
+      s+=`<path d="M ${x-18} ${y} C ${x-42} ${y-18}, ${x-45} ${y+20}, ${x-12} ${y+10} C ${x-4} ${y+42}, ${x+8} ${y+54}, ${x+20} ${y+72}" fill="none" stroke="${col}" stroke-width="15" stroke-linecap="round"/>`;
+      s+=`<circle cx="${x}" cy="${y}" r="${radius}" fill="${col}" stroke="white" stroke-width="3"/>`;
+    }else{
+      s+=`<circle cx="${x}" cy="${y}" r="${radius}" fill="${col}" stroke="white" stroke-width="3"/>`;
+    }
+    s+=`<text x="${x}" y="${y+4}" text-anchor="middle" font-size="9" font-weight="800" fill="${role==="secondary"||d.id==="winter"?"#30352f":"white"}">${it[0]}</text>`;
+  });
+  s+=`<text x="250" y="245" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#30352f">${d.season}</text>
+      <text x="250" y="268" text-anchor="middle" font-size="11" fill="#677066">${d.openArc} open</text>
+    </svg>`;
+  return s;
+}
+function rows(items){
+ return items.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td class="role">${x[2]}</td><td>${x[3]}</td><td>${x[4]}</td><td>${x[5]}</td></tr>`).join("");
+}
+function card(d){
+ return `<article class="card" data-season="${d.id}">
+   <div class="cardhead">
+    <div class="season">${d.season}</div>
+    <h2>${d.title}</h2>
+    <div class="desc">${d.subtitle}</div>
+   </div>
+   <div class="layout">
+    <div class="canvas">${svgFor(d)}</div>
+    <div class="panel">
+      <div class="spec"><h3>Weather Translation</h3><p>${d.influence}</p></div>
+      <div class="spec"><h3>Material Direction</h3><p>${d.materials}</p></div>
+      <div class="spec"><h3>Ribbon</h3><p>${d.bow}</p></div>
+      <div class="spec"><h3>Palette</h3><div class="legend">${d.palette.map(c=>`<span class="chip" style="box-shadow:inset 16px 0 ${c};padding-left:26px">${c}</span>`).join("")}</div></div>
+    </div>
+   </div>
+   <div class="placements">
+    <table>
+     <thead><tr><th>ID</th><th>Element</th><th>Role</th><th>Clock</th><th>Radius</th><th>Construction note</th></tr></thead>
+     <tbody>${rows(d.items)}</tbody>
+    </table>
+   </div>
+   <div class="note"><strong>Manufacturing rule:</strong> build greenery pockets first, seat focal flowers into those pockets second, then add supporting/accent stems and ribbon. Preserve the stated open arc and keep substantial foliage visibly readable after florals are installed.</div>
+ </article>`;
+}
+document.getElementById("cards").innerHTML=designs.map(card).join("");
+document.querySelectorAll("[data-filter]").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+   document.querySelectorAll("[data-filter]").forEach(b=>b.classList.remove("active"));
+   btn.classList.add("active");
+   const f=btn.dataset.filter;
+   document.querySelectorAll(".card").forEach(c=>c.classList.toggle("hidden",f!=="all" && c.dataset.season!==f));
+ });
+});
+document.getElementById("printBtn").addEventListener("click",()=>window.print());
+</script>
+</body>
+</html>
