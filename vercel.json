@@ -1,5 +1,18 @@
 {
   "version": 2,
-  "functions": {"api/*.js": {"runtime": "nodejs22.x"}},
-  "rewrites": [{"source":"/weather-studio","destination":"/index.html"}]
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs22.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/weather-studio",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/weather-studio/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
